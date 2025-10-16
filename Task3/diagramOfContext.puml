@@ -1,0 +1,17 @@
+@startuml
+
+!include C4_Context.puml
+Person(client, "Житель", "Подходит к камере домофона")
+Person(carOfclient, "Житель на автомобиле", "Подъезжает к сканеру номера")
+System_Ext(smartIntercomSystem, "Умный домофон","Умный домофон")
+System_Ext(smartbarrier, "Умный шлагбаум", "Умный шлагбаум")
+System(autorizeSystem, "Система авторизации пользователей", "Умного доступа")
+System(qcrm, "CRM", "Управление данными пользователя")
+
+Rel(client,smartIntercomSystem, "Использование faceID камеры домофона для входа")
+Rel(carOfclient,smartbarrier, "Гос.номер автомобиля")
+Rel(smartIntercomSystem,autorizeSystem, "Аутентификация")
+Rel(smartbarrier,autorizeSystem, "Аутентификация")
+Rel(autorizeSystem,qcrm, "Валидация собственика или авто")
+
+@enduml
