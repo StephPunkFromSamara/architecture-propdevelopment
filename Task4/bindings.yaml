@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-nginx-from-frontend
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx       # к каким Pod’ам применяется
+  policyTypes:
+    - Ingress            # тип политики: входящий трафик
+    - Egress             # (опционально) исходящий трафик
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend  # разрешаем входящий трафик только от Pod с label app=frontend
+      ports:
+        - protocol: TCP
+          port: 80           # разрешаем только порт 80
